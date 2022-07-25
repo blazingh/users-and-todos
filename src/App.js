@@ -24,7 +24,7 @@ function App() {
 	};
 
 	return (
-		<div className="flex flex-col justify-center items-center">
+		<div className="flex flex-col justify-center items-center px-3">
 			<Formik initialValues={initialValues} onSubmit={onSubmit}>
 				{({ values, setFieldValue }) => {
 					return (

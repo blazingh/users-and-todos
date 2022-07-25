@@ -8,7 +8,7 @@ const FormikSelect = ({ name, options, noSelection, ...rest }) => {
 				id={name}
 				name={name}
 				{...rest}
-				className=" bg-transparent w-52 h-10 border rounded-md mx-2 appearance-none"
+				className=" bg-transparent w-52 h-10 border rounded-md m-2 appearance-none"
 			>
 				{noSelection && (
 					<option

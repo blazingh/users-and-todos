@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .main-container {
-	@apply text-white bg-dark p-6 rounded-md w-screen max-w-lg my-6 flex flex-wrap justify-around;
+	@apply text-white bg-dark p-6 rounded-md w-full my-6 flex flex-wrap justify-around;
 }

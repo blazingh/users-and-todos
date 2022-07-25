@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+	@apply flex flex-col justify-center items-center;
+}
+
 .main-container {
-	@apply text-white bg-dark p-6 rounded-md w-full my-6 flex flex-wrap justify-around;
+	@apply fixed w-full h-full top-0 left-0 flex flex-col justify-center items-center;
 }

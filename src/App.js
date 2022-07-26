@@ -1,6 +1,5 @@
 import { useState } from "react";
 import FormikContainer from "./components/FormikContainer";
-import FormikUse from "./FormikUse";
 
 function App() {
 	const [step, setStep] = useState({ current: 1, next: null });

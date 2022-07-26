@@ -1,8 +1,8 @@
 import { Formik, Form } from "formik";
 import { useState } from "react";
 import StepsDashBoard from "./StepsDashBoard.js";
-import Step1 from "./step1.js";
-import Step2 from "./step2.js";
+import { FormikFullList } from "./FormikItems.js";
+import data from "../data.js";
 
 const FormikContainer = () => {
 	const [step, setStep] = useState(1);
@@ -19,9 +19,35 @@ const FormikContainer = () => {
 			{(formik) => (
 				<Form className="w-full">
 					<StepsDashBoard step={step} setStep={setStep} />
-					{step === 1 && <Step1 formik={formik} setStep={setStep} />}
-					{step === 2 && <Step2 formik={formik} setStep={setStep} />}
-					<button type="submit">submit</button>
+					{step === 1 && (
+						<FormikFullList
+							formik={formik}
+							setStep={setStep}
+							title={"Select Treatement"}
+							list={data.treatementGroups}
+							mainfield={"group"}
+							subfield={"treatement"}
+							sublist={data.treatements.filter(
+								(x) => x.group === formik.values.group.id,
+							)}
+							step={2}
+						/>
+					)}
+					{step === 2 && (
+						<FormikFullList
+							formik={formik}
+							setStep={setStep}
+							title={"Select Location"}
+							mainfield={"city"}
+							list={data.cities}
+							subfield={"district"}
+							sublist={data.disctricts.filter(
+								(x) => x.city === formik.values.city.id,
+							)}
+							step={3}
+						/>
+					)}
+					{step === 6 && <button type="submit">submit</button>}
 				</Form>
 			)}
 		</Formik>

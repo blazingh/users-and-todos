@@ -70,8 +70,8 @@ const FormikContainer = () => {
 						/>
 					))}
 				{step === 2 && (
-					<div className="flex flex-wrap items-center bg-dark-2 text-white font-semibold text-base md:text-lg">
-						<label className="big-title">
+					<div className="flex flex-wrap items-center rounded-t bg-dark-2 text-white font-semibold text-base md:text-lg">
+						<label className="big-title rounded-t">
 							{selectedUser.name} / {selectedTask.name}
 						</label>
 						<div className="w-full mx-2 my-4 flex items-center justify-around">
@@ -95,7 +95,7 @@ const FormikContainer = () => {
 				)}
 				{step === 3 && (
 					<div>
-						<label className="big-title">{selectedUser.name}</label>
+						<label className="big-title rounded-t">{selectedUser.name}</label>
 						<div className="flex w-full justify-center items-start bg-dark-3 py-5 text-white text-base md:text-lg font-semibold">
 							<UserSummaryList
 								tasks={getTasks([

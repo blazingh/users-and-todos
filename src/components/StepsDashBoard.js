@@ -8,7 +8,7 @@ const StepsDashBoard = ({ step, setStep }) => {
 		<div className="flex w-full justify-around items-center mt-3 mb-6">
 			{steps.map((single) => (
 				<div
-					className={` border-4 border-blue-10 flex justify-center items-center text-2xl font-bold  rounded-full ${
+					className={` border-4 border-blue-10 flex justify-center items-center text-xl md:text-2xl font-bold  rounded-full ${
 						step === single.id ? "pr-4 bg-blue-10 text-white" : " text-blue-10"
 					}`}
 				>

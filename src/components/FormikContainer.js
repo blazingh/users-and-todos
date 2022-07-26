@@ -14,6 +14,14 @@ const FormikContainer = () => {
 	const [selectedTask, setSelectedTask] = useState();
 	const [statusFilter, setStatusFilter] = useState("incomplete");
 
+	const getTasks = (filters) => {
+		let output = tasks;
+		filters.map((filter) => {
+			output = output.filter((task) => task[filter.filter] === filter.value);
+		});
+		return output;
+	};
+
 	const handleUserSelect = (user) => {
 		selectedUser
 			? selectedUser === user
@@ -28,6 +36,7 @@ const FormikContainer = () => {
 	};
 
 	const handleTaskComplete = () => {
+		//clones the tasks state and modify the selected task and reset the state to the tasks list
 		let newTasks = [...tasks];
 		newTasks.find((task, index) => {
 			if (task.id === selectedTask.id) {
@@ -53,20 +62,20 @@ const FormikContainer = () => {
 									onClick={() => {
 										handleUserSelect(user);
 									}}
-									className={`  p-2 w-full text-center text-white font-bold text-xl mt-1 rounded select-none cursor-pointer hover:bg-blue-10 ${
+									className={`  p-2 w-full text-center text-white font-bold text-xl mt-1 rounded select-none cursor-pointer hover:bg-dark-1 ${
 										selectedUser === user
-											? "bg-blue-10 rounded-b-none"
-											: "bg-blue-20"
+											? "bg-dark-1 rounded-b-none"
+											: "bg-dark-2"
 									}`}
 								>
 									{user.name}
 								</div>
 								{selectedUser === user && (
-									<div className=" bg-blue-20 text-white font-semibold text-lg">
-										<div className="flex justify-around border-b border-blue-30">
+									<div className=" bg-dark-2 text-white font-semibold text-lg">
+										<div className="flex justify-around border-b border-dark-3">
 											<label
 												className={`w-1/2 h-9 flex justify-center items-center ${
-													statusFilter != "incomplete" && "bg-blue-30"
+													statusFilter != "incomplete" && "bg-dark-3"
 												}`}
 												onClick={() => {
 													setStatusFilter("incomplete");
@@ -76,7 +85,7 @@ const FormikContainer = () => {
 											</label>
 											<label
 												className={`w-1/2 h-9 flex justify-center items-center ${
-													statusFilter != "completed" && "bg-blue-30"
+													statusFilter != "completed" && "bg-dark-3"
 												}`}
 												onClick={() => {
 													setStatusFilter("completed");
@@ -85,27 +94,25 @@ const FormikContainer = () => {
 												completed
 											</label>
 										</div>
-										{tasks
-											.filter(
-												(task) =>
-													task.user === user.id && task.status === statusFilter,
-											)
-											.map((task) => (
-												<div
-													key={task.id}
-													className="px-10 py-1 flex items-center justify-between border-b-2 border-blue-30"
+										{getTasks([
+											{ filter: "user", value: selectedUser.id },
+											{ filter: "status", value: statusFilter },
+										]).map((task) => (
+											<div
+												key={task.id}
+												className="px-10 py-1 flex items-center justify-between border-b-2 border-dark-3"
+											>
+												<label>{task.name}</label>
+												<button
+													className="button"
+													onClick={() => {
+														handleTaskSelect(task);
+													}}
 												>
-													<label>{task.name}</label>
-													<button
-														className=" bg-blue-10 p-1 rounded"
-														onClick={() => {
-															handleTaskSelect(task);
-														}}
-													>
-														select
-													</button>
-												</div>
-											))}
+													select
+												</button>
+											</div>
+										))}
 									</div>
 								)}
 							</div>
@@ -114,11 +121,11 @@ const FormikContainer = () => {
 				)}
 				{step === 2 && (
 					<div className="w-full px-5 ">
-						<div className=" w-full bg-blue-10 p-2 text-white font-bold text-lg md:text-xl ">
+						<div className=" w-full bg-dark-1 p-2 text-white font-bold text-lg md:text-xl ">
 							{selectedUser.name} / {selectedTask.name}
 						</div>
-						<div className="flex justify-start items-center p-2 bg-blue-20 text-white font-semibold text-sm md:text-lg">
-							<div className="w-16 h-16 md:w-20 md:h-20 mr-2 border-4 border-blue-10 rounded-xl overflow-hidden">
+						<div className="flex justify-start items-center p-2 bg-dark-2 text-white font-semibold text-base md:text-lg">
+							<div className="w-16 h-16 md:w-20 md:h-20 mr-2 border-4 border-dark-1 rounded-xl overflow-hidden">
 								<img
 									src={"https://picsum.photos/200?" + selectedTask.id}
 									className="w-full"
@@ -129,9 +136,9 @@ const FormikContainer = () => {
 								<label>This Task Is Completed</label>
 							) : (
 								<>
-									<label>do you to compled {selectedTask.name} ?</label>
+									<label>do you to complete {selectedTask.name} ?</label>
 									<button
-										className="p-1 ml-auto rounded bg-blue-10"
+										className="button ml-auto"
 										onClick={handleTaskComplete}
 									>
 										complete
@@ -143,64 +150,56 @@ const FormikContainer = () => {
 				)}
 				{step === 3 && (
 					<div className="w-full px-5">
-						<div className="w-full text-center font-bold text-lg md:text-xl bg-blue-10 p-2 text-white">
+						<div className="w-full text-center font-bold text-lg md:text-xl bg-dark-1 p-2 text-white">
 							{selectedUser.name}
 						</div>
-						<div className="flex w-full justify-around items-start bg-blue-30 py-5 text-white text-sm md:text-lg font-semibold">
-							<div className="text-center">
-								<label className=" rounded bg-blue-10 p-2">
+						<div className="flex w-full justify-center items-start bg-dark-3 py-5 text-white text-sm md:text-lg font-semibold">
+							<div className="w-1/2 flex flex-col px-2">
+								<label className="rounded bg-dark-1 p-2 text-center">
 									Completed :{" "}
 									{
-										tasks.filter(
-											(task) =>
-												task.user === selectedUser.id &&
-												task.status === "completed",
-										).length
+										getTasks([
+											{ filter: "user", value: selectedUser.id },
+											{ filter: "status", value: "completed" },
+										]).length
 									}
 								</label>
-								<div className="mt-3">
-									{tasks
-										.filter(
-											(task) =>
-												task.user === selectedUser.id &&
-												task.status === "completed",
-										)
-										.map((task) => (
-											<div
-												key={task.id}
-												className="px-10 py-1 bg-blue-20 rounded m-1 flex items-center justify-between"
-											>
-												<label>{task.name}</label>
-											</div>
-										))}
+								<div>
+									{getTasks([
+										{ filter: "user", value: selectedUser.id },
+										{ filter: "status", value: "completed" },
+									]).map((task) => (
+										<div
+											key={task.id}
+											className="px-2 py-1 bg-dark-2 rounded m-1 flex items-center justify-center"
+										>
+											<label>{task.name}</label>
+										</div>
+									))}
 								</div>
 							</div>
-							<div className="text-center">
-								<label className=" rounded bg-blue-10 p-2">
+							<div className="w-1/2 flex flex-col px-2">
+								<label className=" rounded bg-dark-1 p-2 text-center">
 									Incomplete :{" "}
 									{
-										tasks.filter(
-											(task) =>
-												task.user === selectedUser.id &&
-												task.status === "incomplete",
-										).length
+										getTasks([
+											{ filter: "user", value: selectedUser.id },
+											{ filter: "status", value: "incomplete" },
+										]).length
 									}
 								</label>
-								<div className="mt-3">
-									{tasks
-										.filter(
-											(task) =>
-												task.user === selectedUser.id &&
-												task.status === "incomplete",
-										)
-										.map((task) => (
-											<div
-												key={task.id}
-												className="px-10 py-1 bg-blue-20 rounded m-1 flex items-center justify-between"
-											>
-												<label>{task.name}</label>
-											</div>
-										))}
+								<div>
+									{getTasks([
+										{ filter: "user", value: selectedUser.id },
+										{ filter: "status", value: "incomplete" },
+									]).map((task) => (
+										<div
+											key={task.id}
+											className="px-2 py-1 bg-dark-2 rounded m-1 flex items-center justify-center"
+										>
+											<label>{task.name}</label>
+										</div>
+									))}
 								</div>
 							</div>
 						</div>

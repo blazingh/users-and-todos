@@ -129,7 +129,7 @@ const FormikContainer = () => {
 							{selectedUser.name} / {selectedTask.name}
 						</div>
 						<div className="flex justify-start items-center p-2 bg-dark-2 text-white font-semibold text-base md:text-lg">
-							<div className="w-16 max-h-16 md:w-20 md:h-20 mr-2 border-4 border-dark-1 rounded-xl overflow-hidden">
+							<div className="w-16 h-16 md:w-20 md:h-20 mr-2 border-4 border-dark-1 rounded-xl overflow-hidden">
 								<img
 									src={"https://picsum.photos/200?" + selectedTask.id}
 									className="w-full"

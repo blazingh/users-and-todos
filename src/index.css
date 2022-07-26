@@ -11,5 +11,5 @@ body {
 }
 
 .big-title {
-	@apply w-full bg-dark-1 p-2 text-white font-bold text-lg md:text-xl mt-1;
+	@apply w-full flex justify-center bg-dark-1 p-2 text-white font-bold text-lg md:text-xl;
 }

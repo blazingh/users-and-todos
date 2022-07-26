@@ -12,7 +12,7 @@ const FormikContainer = () => {
 	const [step, setStep] = useState(1);
 	const [selectedUser, setSelectedUser] = useState();
 	const [selectedTask, setSelectedTask] = useState();
-	const [statusFilter, setStatusFilter] = useState("incomplete");
+	const [statusFilter, setStatusFilter] = useState(false);
 
 	const getTasks = (filters) => {
 		let output = tasks;
@@ -36,16 +36,18 @@ const FormikContainer = () => {
 	};
 
 	const handleTaskComplete = () => {
-		//clones the tasks state and modify the selected task and reset the state to the tasks list
+		//clones the tasks state
 		let newTasks = [...tasks];
+		//and modify the selected task
 		newTasks.find((task, index) => {
 			if (task.id === selectedTask.id) {
-				let newTask = { ...task, status: "completed" };
+				let newTask = { ...task, completed: true };
 				setSelectedTask(newTask);
 				newTasks[index] = newTask;
 				return;
 			}
 		});
+		// then reset the old tasks list to the new tasks list
 		setTasks(newTasks);
 		setStep(3);
 	};
@@ -62,7 +64,7 @@ const FormikContainer = () => {
 									onClick={() => {
 										handleUserSelect(user);
 									}}
-									className={`  p-2 w-full text-center text-white font-bold text-xl mt-1 rounded select-none cursor-pointer hover:bg-dark-1 ${
+									className={`  big-title rounded text-center cursor-pointer ${
 										selectedUser === user
 											? "bg-dark-1 rounded-b-none"
 											: "bg-dark-2"
@@ -75,20 +77,20 @@ const FormikContainer = () => {
 										<div className="flex justify-around border-b border-dark-3">
 											<label
 												className={`w-1/2 h-9 flex justify-center items-center ${
-													statusFilter != "incomplete" && "bg-dark-3"
+													statusFilter && "bg-dark-3"
 												}`}
 												onClick={() => {
-													setStatusFilter("incomplete");
+													setStatusFilter(false);
 												}}
 											>
 												incomplete
 											</label>
 											<label
 												className={`w-1/2 h-9 flex justify-center items-center ${
-													statusFilter != "completed" && "bg-dark-3"
+													!statusFilter && "bg-dark-3"
 												}`}
 												onClick={() => {
-													setStatusFilter("completed");
+													setStatusFilter(true);
 												}}
 											>
 												completed
@@ -96,7 +98,7 @@ const FormikContainer = () => {
 										</div>
 										{getTasks([
 											{ filter: "user", value: selectedUser.id },
-											{ filter: "status", value: statusFilter },
+											{ filter: "completed", value: statusFilter },
 										]).map((task) => (
 											<div
 												key={task.id}
@@ -121,7 +123,7 @@ const FormikContainer = () => {
 				)}
 				{step === 2 && (
 					<div className="w-full px-5 ">
-						<div className=" w-full bg-dark-1 p-2 text-white font-bold text-lg md:text-xl ">
+						<div className="big-title">
 							{selectedUser.name} / {selectedTask.name}
 						</div>
 						<div className="flex justify-start items-center p-2 bg-dark-2 text-white font-semibold text-base md:text-lg">
@@ -132,7 +134,7 @@ const FormikContainer = () => {
 									alt={selectedTask.id}
 								/>
 							</div>
-							{selectedTask.status === "completed" ? (
+							{selectedTask.completed ? (
 								<label>This Task Is Completed</label>
 							) : (
 								<>
@@ -150,9 +152,7 @@ const FormikContainer = () => {
 				)}
 				{step === 3 && (
 					<div className="w-full px-5">
-						<div className="w-full text-center font-bold text-lg md:text-xl bg-dark-1 p-2 text-white">
-							{selectedUser.name}
-						</div>
+						<div className="big-title text-center">{selectedUser.name}</div>
 						<div className="flex w-full justify-center items-start bg-dark-3 py-5 text-white text-sm md:text-lg font-semibold">
 							<div className="w-1/2 flex flex-col px-2">
 								<label className="rounded bg-dark-1 p-2 text-center">
@@ -160,14 +160,14 @@ const FormikContainer = () => {
 									{
 										getTasks([
 											{ filter: "user", value: selectedUser.id },
-											{ filter: "status", value: "completed" },
+											{ filter: "completed", value: true },
 										]).length
 									}
 								</label>
 								<div>
 									{getTasks([
 										{ filter: "user", value: selectedUser.id },
-										{ filter: "status", value: "completed" },
+										{ filter: "completed", value: true },
 									]).map((task) => (
 										<div
 											key={task.id}
@@ -184,14 +184,14 @@ const FormikContainer = () => {
 									{
 										getTasks([
 											{ filter: "user", value: selectedUser.id },
-											{ filter: "status", value: "incomplete" },
+											{ filter: "completed", value: false },
 										]).length
 									}
 								</label>
 								<div>
 									{getTasks([
 										{ filter: "user", value: selectedUser.id },
-										{ filter: "status", value: "incomplete" },
+										{ filter: "completed", value: false },
 									]).map((task) => (
 										<div
 											key={task.id}

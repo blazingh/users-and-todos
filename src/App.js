@@ -1,7 +1,5 @@
 import { useState } from "react";
 import FormikContainer from "./components/FormikContainer";
-import NavDashboard from "./components/NavDashboard";
-import StepsDashBoard from "./components/StepsDashBoard";
 
 function App() {
 	const [step, setStep] = useState({ current: 1, next: null });

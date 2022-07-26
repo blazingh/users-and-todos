@@ -10,9 +10,9 @@ const FormikContainer = () => {
 	const [tasks, setTasks] = useState(tasksData);
 
 	const [step, setStep] = useState(1);
+
 	const [selectedUser, setSelectedUser] = useState();
 	const [selectedTask, setSelectedTask] = useState();
-	const [statusFilter, setStatusFilter] = useState(false);
 
 	const getTasks = (filters) => {
 		let output = tasks;
@@ -55,54 +55,57 @@ const FormikContainer = () => {
 	return (
 		<div className="flex flex-col justify-center items-start w-full">
 			<StepsDashBoard step={step} setStep={setStep} />
-			<div className="w-full ">
-				{step === 1 && (
-					<div className="w-full px-5">
-						{users.map((user) => (
-							<div key={user.id}>
-								<div
-									onClick={() => {
-										handleUserSelect(user);
-									}}
-									className={`  big-title rounded text-center cursor-pointer ${
-										selectedUser === user
-											? "bg-dark-1 rounded-b-none"
-											: "bg-dark-2"
-									}`}
-								>
-									{user.name}
-								</div>
-								{selectedUser === user && (
-									<div className=" bg-dark-2 text-white font-semibold text-lg">
-										<div className="flex justify-around border-b border-dark-3">
-											<label
-												className={`w-1/2 h-9 flex justify-center items-center ${
-													statusFilter && "bg-dark-3"
-												}`}
-												onClick={() => {
-													setStatusFilter(false);
-												}}
-											>
-												incomplete
-											</label>
-											<label
-												className={`w-1/2 h-9 flex justify-center items-center ${
-													!statusFilter && "bg-dark-3"
-												}`}
-												onClick={() => {
-													setStatusFilter(true);
-												}}
-											>
-												completed
-											</label>
-										</div>
-										{getTasks([
-											{ filter: "user", value: selectedUser.id },
-											{ filter: "completed", value: statusFilter },
-										]).map((task) => (
+			<div className="w-full px-5">
+				{step === 1 &&
+					users.map((user) => (
+						<div key={user.id}>
+							<div
+								onClick={() => {
+									handleUserSelect(user);
+								}}
+								className={`  big-title rounded text-center cursor-pointer ${
+									selectedUser === user
+										? "bg-dark-1 rounded-b-none"
+										: "bg-dark-2"
+								}`}
+							>
+								{user.name}
+							</div>
+							{selectedUser === user && (
+								<div className=" bg-dark-2 text-white font-semibold text-lg flex flex-wrap">
+									<input
+										type="radio"
+										id="completed"
+										name="complete"
+										className="peer hidden"
+									/>
+									<input
+										type="radio"
+										id="uncompleted"
+										name="complete"
+										className="hidden"
+									/>
+									<label
+										htmlFor="uncompleted"
+										className="w-1/2 h-9 flex justify-center items-center bg-dark-2 peer-checked:bg-dark-3"
+									>
+										incomplete
+									</label>
+									<label
+										htmlFor="completed"
+										className="w-1/2 h-9 flex justify-center items-center bg-dark-3 peer-checked:bg-dark-2"
+									>
+										completed
+									</label>
+									{getTasks([{ filter: "user", value: selectedUser.id }]).map(
+										(task) => (
 											<div
 												key={task.id}
-												className="px-10 py-1 flex items-center justify-between border-b-2 border-dark-3"
+												className={`w-full px-10 py-1 items-center justify-between border-b-2 border-dark-3 ${
+													task.completed
+														? "hidden peer-checked:flex"
+														: "flex peer-checked:hidden"
+												}`}
 											>
 												<label>{task.name}</label>
 												<button
@@ -114,20 +117,19 @@ const FormikContainer = () => {
 													select
 												</button>
 											</div>
-										))}
-									</div>
-								)}
-							</div>
-						))}
-					</div>
-				)}
+										),
+									)}
+								</div>
+							)}
+						</div>
+					))}
 				{step === 2 && (
-					<div className="w-full px-5 ">
+					<>
 						<div className="big-title">
 							{selectedUser.name} / {selectedTask.name}
 						</div>
 						<div className="flex justify-start items-center p-2 bg-dark-2 text-white font-semibold text-base md:text-lg">
-							<div className="w-16 h-16 md:w-20 md:h-20 mr-2 border-4 border-dark-1 rounded-xl overflow-hidden">
+							<div className="w-16 max-h-16 md:w-20 md:h-20 mr-2 border-4 border-dark-1 rounded-xl overflow-hidden">
 								<img
 									src={"https://picsum.photos/200?" + selectedTask.id}
 									className="w-full"
@@ -138,7 +140,7 @@ const FormikContainer = () => {
 								<label>This Task Is Completed</label>
 							) : (
 								<>
-									<label>do you to complete {selectedTask.name} ?</label>
+									<label>Do you want to complete {selectedTask.name} ?</label>
 									<button
 										className="button ml-auto"
 										onClick={handleTaskComplete}
@@ -148,11 +150,13 @@ const FormikContainer = () => {
 								</>
 							)}
 						</div>
-					</div>
+					</>
 				)}
 				{step === 3 && (
-					<div className="w-full px-5">
-						<div className="big-title text-center">{selectedUser.name}</div>
+					<>
+						<label className="big-title text-center flex justify-center">
+							{selectedUser.name}
+						</label>
 						<div className="flex w-full justify-center items-start bg-dark-3 py-5 text-white text-sm md:text-lg font-semibold">
 							<div className="w-1/2 flex flex-col px-2">
 								<label className="rounded bg-dark-1 p-2 text-center">
@@ -171,7 +175,7 @@ const FormikContainer = () => {
 									]).map((task) => (
 										<div
 											key={task.id}
-											className="px-2 py-1 bg-dark-2 rounded m-1 flex items-center justify-center"
+											className="px-2 py-1 bg-dark-2 rounded m-2 flex items-center justify-center"
 										>
 											<label>{task.name}</label>
 										</div>
@@ -195,7 +199,7 @@ const FormikContainer = () => {
 									]).map((task) => (
 										<div
 											key={task.id}
-											className="px-2 py-1 bg-dark-2 rounded m-1 flex items-center justify-center"
+											className="px-2 py-1 bg-dark-2 rounded m-2 flex items-center justify-center"
 										>
 											<label>{task.name}</label>
 										</div>
@@ -203,7 +207,7 @@ const FormikContainer = () => {
 								</div>
 							</div>
 						</div>
-					</div>
+					</>
 				)}
 			</div>
 		</div>

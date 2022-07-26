@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-	@apply flex flex-col justify-center items-center;
+	@apply flex flex-col justify-center items-center bg-gray-300;
 }
 
 .button {

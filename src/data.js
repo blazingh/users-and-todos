@@ -43,7 +43,7 @@ export default {
 			district: 1,
 			treatements: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			language: ["all", "english", "turkish"],
-			rating: 3,
+			rating: 5,
 		},
 		{
 			id: 2,
@@ -51,7 +51,7 @@ export default {
 			district: 2,
 			treatements: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			language: ["all", "turkish"],
-			rating: 3,
+			rating: 4,
 		},
 		{
 			id: 3,
@@ -59,7 +59,7 @@ export default {
 			district: 3,
 			treatements: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			language: ["all", "english", "turkish"],
-			rating: 4,
+			rating: 3,
 		},
 		{
 			id: 4,
@@ -75,7 +75,7 @@ export default {
 			district: 5,
 			treatements: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			language: ["all", "turkish"],
-			rating: 5,
+			rating: 3,
 		},
 		{
 			id: 6,

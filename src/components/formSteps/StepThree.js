@@ -238,27 +238,25 @@ const StepThree = () => {
 			{clinicList.map((clinic) => (
 				<div
 					key={clinic.id}
-					className="border-2 border-dark-1 text-dark-1 w-full py-1 rounded-xl grid grid-cols-4 my-4"
+					className="border-2 border-dark-1 text-dark-1 w-full p-2 rounded-xl grid grid-cols-4 my-4"
 				>
-					<div className=" w-full h-28 flex justify-center items-center">
+					<div className=" col-span-1 flex justify-center items-center ">
 						<img
-							src={`https://picsum.photos/100?" ${clinic.id} `}
+							src={`https://picsum.photos/200?" ${clinic.id} `}
 							alt="img"
 							className=" rounded object-cover"
 						/>
 					</div>
-					<div className=" col-span-3 flex items-center relative">
-						<label className=" font-semibold text-lg  ml-3">
-							{clinic.name}
-						</label>
-						<label className=" absolute top-3 right-5">
+					<div className=" col-span-3 ml-2 flex items-center relative">
+						<label className=" font-semibold text-lg ">{clinic.name}</label>
+						<label className=" absolute top-3 right-0">
 							{clinic.rating} / 5
 						</label>
-						<label className=" absolute bottom-3 right-5">
+						<label className=" absolute bottom-3 right-0">
 							{clinic.language.map((lang) => lang != "all" && lang + " ")}
 						</label>
 					</div>
-					<div className="col-span-4 px-1 m-1 flex justify-center items-center">
+					<div className="col-span-4 mt-2 flex justify-center items-center">
 						<button type="button" className="button w-full">
 							select
 						</button>

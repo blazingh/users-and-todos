@@ -48,7 +48,7 @@ const FormikContainer = () => {
 							step={3}
 						/>
 					)}
-					{step === 3 && <StepThree />}
+					{step === 3 && <StepThree formik={formik} setStep={setStep} />}
 					{step === 6 && <button type="submit">submit</button>}
 				</Form>
 			)}

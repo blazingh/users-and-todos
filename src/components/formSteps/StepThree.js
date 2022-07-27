@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import data from "../../data";
 
-const StepThree = () => {
-	const clinics = data.clinics;
+const StepThree = ({ formik, setStep }) => {
+	const [clinics, setClinics] = useState(
+		data.clinics.filter((x) => x.district === formik.values.district.id),
+	);
 	const [clinicList, setClinicList] = useState(clinics);
 	const [filter, setFilter] = useState({ rating: 3, language: "all" });
 	const [sort, setSort] = useState(0);
@@ -275,34 +277,56 @@ const StepThree = () => {
 					</div>
 				</div>
 			</div>
-			{clinicList.map((clinic) => (
-				<div
-					key={clinic.id}
-					className="border-2 border-blue-10 text-dark-1 w-full p-2 rounded-xl grid grid-cols-4 my-4"
-				>
-					<div className=" aspect-square overflow-hidden col-span-1 flex justify-center items-center ">
-						<img
-							src={`https://picsum.photos/200?" ${clinic.id} `}
-							alt="img"
-							className=" rounded object-cover"
-						/>
+			{clinicList.map((clinic) => {
+				const district = data.disctricts.find((x) => x.id === clinic.district);
+				const city = data.cities.find((x) => x.id === district.city);
+				return (
+					<div
+						key={clinic.id}
+						className="border-2 border-blue-10 text-dark-1 w-full p-2 rounded-xl grid grid-cols-4 my-4"
+					>
+						<div className=" aspect-square overflow-hidden col-span-1 flex justify-center items-center ">
+							<img
+								src={`https://picsum.photos/200?" ${clinic.id} `}
+								alt="img"
+								className=" rounded object-cover"
+							/>
+						</div>
+						<div className=" col-span-3 ml-2 flex items-center relative">
+							<label className=" font-semibold text-lg ">{clinic.name}</label>
+							<label className=" absolute top-0 right-0">
+								{clinic.rating} / 5
+							</label>
+							<label className=" absolute bottom-0 right-0">
+								{clinic.language.map((lang) => lang != "all" && lang + " ")}
+							</label>
+							<label className=" absolute bottom-0 left-0">
+								{city.name} - {district.name}
+							</label>
+						</div>
+						<div className="col-span-4 mt-2 flex justify-center items-center">
+							<button
+								type="button"
+								className="button w-full"
+								onClick={() => {
+									formik.setFieldValue("clinic", clinic);
+									setStep(4);
+								}}
+							>
+								select
+							</button>
+						</div>
 					</div>
-					<div className=" col-span-3 ml-2 flex items-center relative">
-						<label className=" font-semibold text-lg ">{clinic.name}</label>
-						<label className=" absolute top-3 right-0">
-							{clinic.rating} / 5
-						</label>
-						<label className=" absolute bottom-3 right-0">
-							{clinic.language.map((lang) => lang != "all" && lang + " ")}
-						</label>
-					</div>
-					<div className="col-span-4 mt-2 flex justify-center items-center">
-						<button type="button" className="button w-full">
-							select
-						</button>
-					</div>
-				</div>
-			))}
+				);
+			})}
+			<label
+				onClick={() => {
+					setClinics(data.clinics);
+					handleFilter();
+				}}
+			>
+				show all clinics
+			</label>
 		</div>
 	);
 };

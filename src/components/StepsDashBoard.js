@@ -20,9 +20,9 @@ const StepsDashBoard = ({ step, setStep }) => {
 						onClick={() => {
 							step > single.id && setStep(single.id);
 						}}
-						className={` flex justify-center items-center rounded-full cursor-pointer ${
+						className={` flex justify-center items-center rounded-full ${
 							step === single.id ? "w-10 h-10" : "w-7 h-7"
-						}`}
+						} ${step > single.id ? "cursor-pointer " : "cursor-default "}`}
 					>
 						{single.id}
 					</label>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import StepsDashBoard from "./StepsDashBoard.js";
 import { FormikFullList } from "./FormikItems.js";
 import data from "../data.js";
+import StepThree from "./formSteps/StepThree.js";
 
 const FormikContainer = () => {
 	const [step, setStep] = useState(1);
@@ -17,7 +18,7 @@ const FormikContainer = () => {
 			className="w-full"
 		>
 			{(formik) => (
-				<Form className="w-full">
+				<Form className="w-full px-5">
 					<StepsDashBoard step={step} setStep={setStep} />
 					{step === 1 && (
 						<FormikFullList
@@ -47,6 +48,7 @@ const FormikContainer = () => {
 							step={3}
 						/>
 					)}
+					{step === 3 && <StepThree />}
 					{step === 6 && <button type="submit">submit</button>}
 				</Form>
 			)}

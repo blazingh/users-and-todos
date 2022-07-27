@@ -12,7 +12,7 @@ const StepsDashBoard = ({ step, setStep }) => {
 			{steps.map((single) => (
 				<div
 					key={single.id}
-					className={` border-2 border-blue-10 flex justify-center items-center text-lg md:text-xl font-semibold  rounded-full ${
+					className={` border-2 border-blue-10 flex justify-center items-center text-sm md:text-xl font-semibold  rounded-full ${
 						step === single.id ? "pr-4 bg-blue-10 text-white" : " text-blue-10"
 					}`}
 				>
@@ -21,7 +21,9 @@ const StepsDashBoard = ({ step, setStep }) => {
 							step > single.id && setStep(single.id);
 						}}
 						className={` flex justify-center items-center rounded-full ${
-							step === single.id ? "w-10 h-10" : "w-7 h-7"
+							step === single.id
+								? "w-10 h-10 md:w-12 md:h-12"
+								: "w-6 h-6 md:w-8 md:h-8"
 						} ${step > single.id ? "cursor-pointer " : "cursor-default "}`}
 					>
 						{single.id}

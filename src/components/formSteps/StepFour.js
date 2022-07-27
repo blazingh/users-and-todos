@@ -10,19 +10,19 @@ const StepFour = ({ formik, setStep }) => {
 			{doctors.map((doctor) => (
 				<div
 					key={doctor.id}
-					className=" border-2 border-blue-10 my-4 rounded-xl p-2 grid grid-cols-4"
+					className=" border-2 border-blue-10 my-4 rounded-xl p-2 flex items-center justify-start relative"
 				>
-					<div className=" h-24 aspect-square rounded-md overflow-hidden">
+					<div className="w-1/5 aspect-square rounded-md overflow-hidden">
 						<img
 							className=" w-full object-cover"
-							src={`https://i.pravatar.cc/100? ${doctor.id}`}
+							src={`https://i.pravatar.cc/200? ${doctor.id}`}
 						/>{" "}
 					</div>
 
-					<div className="font-semibold text-lg text-dark-1 text-left flex items-center col-span-2">
+					<div className="font-semibold text-dark-1 text-left flex items-center ml-2">
 						{doctor.name}
 					</div>
-					<div className="flex col-span-1 w-full justify-center items-center">
+					<div className="flex col-span-1 justify-center items-center absolute right-2 ">
 						<button
 							type="butoon"
 							className="button"

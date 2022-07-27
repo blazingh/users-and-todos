@@ -6,6 +6,7 @@ import StepOne from "./formSteps/StepOne.js";
 import StepTwo from "./formSteps/StepTwo.js";
 import StepFour from "./formSteps/StepFour.js";
 import StepFive from "./formSteps/StepFive.js";
+import StepSix from "./formSteps/StepSix.js";
 
 const FormikContainer = () => {
 	const [step, setStep] = useState(1);
@@ -34,7 +35,7 @@ const FormikContainer = () => {
 					{step === 3 && <StepThree formik={formik} setStep={setStep} />}
 					{step === 4 && <StepFour formik={formik} setStep={setStep} />}
 					{step === 5 && <StepFive formik={formik} setStep={setStep} />}
-					{step === 6 && <button type="submit">submit</button>}
+					{step === 6 && <StepSix value={formik.values} />}
 				</Form>
 			)}
 		</Formik>

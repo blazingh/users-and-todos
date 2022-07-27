@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import arrow from "../../media/arrow.png";
 
 const StepFive = ({ formik, setStep }) => {
@@ -11,6 +11,13 @@ const StepFive = ({ formik, setStep }) => {
 		{ hour: "14", min: "00" },
 		{ hour: "16", min: "30" },
 	];
+	useEffect(() => {
+		let newDate = new Date(date);
+		formik.setFieldValue("date", {
+			day: newDate.getDate(),
+			month: newDate.getMonth() + 1,
+		});
+	}, []);
 	const [date, setDate] = useState(today.toDateString());
 	return (
 		<div className="w-full">

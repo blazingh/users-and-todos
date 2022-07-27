@@ -1,24 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import data from "../../data";
 
 const StepThree = () => {
+	const clinics = data.clinics;
+	const [clinicList, setClinicList] = useState(clinics);
+	const [filter, setFilter] = useState({ rating: 3, language: "all" });
 	const [option, setOption] = useState(null);
+	useEffect(() => {
+		let newList = [...clinics];
+		setOption(null);
+		newList = newList.filter((x) => x.rating >= filter.rating);
+		newList = newList.filter((x) => x.language.includes(filter.language));
+		setClinicList(newList);
+	}, [filter]);
+	const handleSort = () => {};
 	return (
-		<div className="flex justify-between relative">
-			<div className="w-1/3">
-				<label
-					onClick={() => {
-						option === "filter" ? setOption(null) : setOption("filter");
-					}}
-					className={`w-full flex border-2 rounded-xl justify-center text-lg p-1 ${
-						option === "filter"
-							? "bg-blue-10 text-white border-blue-10 rounded-b-none"
-							: "border-dark-1 text-dark-1"
-					}`}
-				>
-					Filter
-				</label>
-				{option === "filter" && (
-					<div className=" absolute pb-4 left-0 w-full rounded-xl rounded-tl-none bg-dark-3 text-white flex flex-wrap justify-center select-none">
+		<div>
+			<div className="flex justify-between relative">
+				<div className="w-1/3">
+					<label
+						onClick={() => {
+							option === "filter" ? setOption(null) : setOption("filter");
+						}}
+						className={`w-full flex border-2 rounded-xl justify-center text-lg p-1 ${
+							option === "filter"
+								? "bg-blue-10 text-white border-blue-10 rounded-b-none"
+								: "border-dark-1 text-dark-1"
+						}`}
+					>
+						Filter
+					</label>
+					<div
+						className={` z-10 absolute pb-4 left-0 w-full rounded-xl rounded-tl-none bg-dark-3 text-white flex-wrap justify-center select-none ${
+							option === "filter" ? "flex" : "hidden"
+						}`}
+					>
 						<label className="w-full flex justify-center my-2">Rating</label>
 						<div>
 							<input
@@ -26,9 +42,13 @@ const StepThree = () => {
 								name="rating"
 								id="rating3"
 								className="peer hidden"
+								defaultChecked={true}
 							/>
 							<label
 								htmlFor="rating3"
+								onClick={() => {
+									setFilter({ ...filter, rating: 3 });
+								}}
 								className="mx-1 h-9 w-9 flex justify-center items-center rounded-lg border peer-checked:border-blue-10 peer-checked:bg-blue-10 peer-checked:text-white"
 							>
 								3+
@@ -43,6 +63,9 @@ const StepThree = () => {
 							/>
 							<label
 								htmlFor="rating4"
+								onClick={() => {
+									setFilter({ ...filter, rating: 4 });
+								}}
 								className="mx-1 h-9 w-9 flex justify-center items-center rounded-lg border peer-checked:border-blue-10 peer-checked:bg-blue-10 peer-checked:text-white"
 							>
 								4+
@@ -57,6 +80,9 @@ const StepThree = () => {
 							/>
 							<label
 								htmlFor="rating5"
+								onClick={() => {
+									setFilter({ ...filter, rating: 5 });
+								}}
 								className="mx-1 h-9 w-9 flex justify-center items-center rounded-lg border peer-checked:border-blue-10 peer-checked:bg-blue-10 peer-checked:text-white"
 							>
 								5
@@ -67,11 +93,32 @@ const StepThree = () => {
 							<input
 								type="radio"
 								name="lang"
+								id="langall"
+								className="peer hidden"
+								defaultChecked={true}
+							/>
+							<label
+								htmlFor="langall"
+								onClick={() => {
+									setFilter({ ...filter, language: "all" });
+								}}
+								className="mx-1 px-2 h-9 flex justify-center items-center rounded-lg border peer-checked:border-blue-10 peer-checked:bg-blue-10 peer-checked:text-white"
+							>
+								all
+							</label>
+						</div>
+						<div>
+							<input
+								type="radio"
+								name="lang"
 								id="langen"
 								className="peer hidden"
 							/>
 							<label
 								htmlFor="langen"
+								onClick={() => {
+									setFilter({ ...filter, language: "english" });
+								}}
 								className="mx-1 px-2 h-9 flex justify-center items-center rounded-lg border peer-checked:border-blue-10 peer-checked:bg-blue-10 peer-checked:text-white"
 							>
 								English
@@ -86,29 +133,34 @@ const StepThree = () => {
 							/>
 							<label
 								htmlFor="langtr"
+								onClick={() => {
+									setFilter({ ...filter, language: "turkish" });
+								}}
 								className="mx-1 px-2 h-9 flex justify-center items-center rounded-lg border peer-checked:border-blue-10 peer-checked:bg-blue-10 peer-checked:text-white"
 							>
 								Turkish
 							</label>
 						</div>
 					</div>
-				)}
-			</div>
-			<div className="w-1/3">
-				<label
-					onClick={() => {
-						option === "sort" ? setOption(null) : setOption("sort");
-					}}
-					className={`w-full flex border-2 rounded-xl justify-center text-lg p-1 ${
-						option === "sort"
-							? "bg-blue-10 text-white border-blue-10 rounded-b-none"
-							: "border-dark-1 text-dark-1"
-					}`}
-				>
-					Sort
-				</label>
-				{option === "sort" && (
-					<div className=" absolute pb-4 pt-2 left-0 w-full rounded-xl rounded-tr-none bg-dark-3 text-white flex flex-col flex-wrap justify-center px-20  select-none">
+				</div>
+				<div className="w-1/3">
+					<label
+						onClick={() => {
+							option === "sort" ? setOption(null) : setOption("sort");
+						}}
+						className={`w-full flex border-2 rounded-xl justify-center text-lg p-1 ${
+							option === "sort"
+								? "bg-blue-10 text-white border-blue-10 rounded-b-none"
+								: "border-dark-1 text-dark-1"
+						}`}
+					>
+						Sort
+					</label>
+					<div
+						className={` absolute pb-4 pt-2 left-0 w-full rounded-xl rounded-tr-none bg-dark-3 text-white flex-col flex-wrap justify-center px-20  select-none ${
+							option === "sort" ? "flex" : "hidden"
+						}`}
+					>
 						<div>
 							<input
 								type="radio"
@@ -181,8 +233,38 @@ const StepThree = () => {
 							</label>
 						</div>
 					</div>
-				)}
+				</div>
 			</div>
+			{clinicList.map((clinic) => (
+				<div
+					key={clinic.id}
+					className="border-2 border-dark-1 text-dark-1 w-full py-1 rounded-xl grid grid-cols-4 my-4"
+				>
+					<div className=" w-full h-28 flex justify-center items-center">
+						<img
+							src={`https://picsum.photos/100?" ${clinic.id} `}
+							alt="img"
+							className=" rounded object-cover"
+						/>
+					</div>
+					<div className=" col-span-3 flex items-center relative">
+						<label className=" font-semibold text-lg  ml-3">
+							{clinic.name}
+						</label>
+						<label className=" absolute top-3 right-5">
+							{clinic.rating} / 5
+						</label>
+						<label className=" absolute bottom-3 right-5">
+							{clinic.language.map((lang) => lang != "all" && lang + " ")}
+						</label>
+					</div>
+					<div className="col-span-4 px-1 m-1 flex justify-center items-center">
+						<button type="button" className="button w-full">
+							select
+						</button>
+					</div>
+				</div>
+			))}
 		</div>
 	);
 };

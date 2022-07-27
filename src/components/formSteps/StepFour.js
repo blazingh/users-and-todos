@@ -6,7 +6,7 @@ const StepFour = ({ formik, setStep }) => {
 		data.doctors.filter((x) => x.clinic === formik.values.clinic.id),
 	);
 	return (
-		<div>
+		<div className="w-full">
 			{doctors.map((doctor) => (
 				<div
 					key={doctor.id}
@@ -19,7 +19,7 @@ const StepFour = ({ formik, setStep }) => {
 						/>{" "}
 					</div>
 
-					<div className="font-semibold text-dark-1 text-left flex items-center ml-2">
+					<div className="font-semibold text-dark-1 text-left flex w-1/2 items-center ml-2">
 						{doctor.name}
 					</div>
 					<div className="flex col-span-1 justify-center items-center absolute right-2 ">

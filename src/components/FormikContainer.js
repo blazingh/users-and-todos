@@ -5,10 +5,18 @@ import StepThree from "./formSteps/StepThree.js";
 import StepOne from "./formSteps/StepOne.js";
 import StepTwo from "./formSteps/StepTwo.js";
 import StepFour from "./formSteps/StepFour.js";
+import StepFive from "./formSteps/StepFive.js";
 
 const FormikContainer = () => {
 	const [step, setStep] = useState(1);
-	const initialValues = { group: {}, treatement: {}, city: {}, district: {} };
+	const initialValues = {
+		group: {},
+		treatement: {},
+		city: {},
+		district: {},
+		date: {},
+		time: {},
+	};
 	const onSubmit = (values) => {
 		console.log(values);
 	};
@@ -25,6 +33,7 @@ const FormikContainer = () => {
 					{step === 2 && <StepTwo formik={formik} setStep={setStep} />}
 					{step === 3 && <StepThree formik={formik} setStep={setStep} />}
 					{step === 4 && <StepFour formik={formik} setStep={setStep} />}
+					{step === 5 && <StepFive formik={formik} setStep={setStep} />}
 					{step === 6 && <button type="submit">submit</button>}
 				</Form>
 			)}
